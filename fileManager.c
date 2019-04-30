@@ -38,7 +38,22 @@ int main()
 {
 
   FILE *fp;
+  char str[50] = "Eduardo";
+  char buffer_leitura[100];
+  int n;
+
   fp = abrir_arquivo("data.dat");
+
+  n = fread(buffer_leitura, sizeof(char), 100, fp);
+  buffer_leitura[n] = 0;
+  printf("%s\n", buffer_leitura);
+
+  fclose(fp);
+  fp = abrir_arquivo("data.dat");
+
+  fwrite(str, sizeof(char), strlen(str), fp);
+
+  fclose(fp);
 
   return 0;
 
