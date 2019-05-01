@@ -58,3 +58,6 @@ int main()
   return 0;
 
 }
+
+//buscar por fseek
+//fazer um cadastro de cliente, adicionar, alterar, remover e listar
