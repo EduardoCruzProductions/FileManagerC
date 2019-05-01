@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-FILE* abrir_arquivo (char *fname){
+FILE* abrir_arquivo (char *fname)
+{
   // w -> Significa write. Ele cria o arquivo automaticamente, mas quando o arquivo ja existe ele é sobescrito
   // r -> Significa read. Ele le o arquivo caso exista, caso ele nao exista ele retorna null
   // b -> Significa binario. Significa q os arquivos são interpretados de forma binária
