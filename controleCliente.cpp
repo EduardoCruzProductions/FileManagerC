@@ -7,7 +7,7 @@ char *DATA = "clientes.dat";
 
 typedef struct cliente{
   int codigo;
-  string nome;
+  char nome[100];
 } Cliente;
 
 FILE* abrir_arquivo (char *fname)
@@ -55,7 +55,7 @@ void cadastrar_cliente()
   cin >> cliente.nome;
 
   fp = abrir_arquivo(DATA);
-  fseek(fp, sizeof(Cliente), SEEK_END);
+  fseek(fp, 0, SEEK_END);
   fwrite(&cliente, sizeof(Cliente), 1, fp);
 
   fclose(fp);
@@ -66,26 +66,23 @@ void listar_cliente()
 {
 
   FILE *fp;
-  Cliente buffer[100];
+  Cliente buffer[10];
   int n;
 
   fp = abrir_arquivo(DATA);
-  fseek(fp, sizeof(Cliente), SEEK_SET);
-  n = fread(buffer, sizeof(Cliente), 100, fp);
-
+  fseek(fp, 0, SEEK_SET);
+  n = fread(buffer, sizeof(Cliente), 10, fp);
 
   cout << "--------------------- Lista de clientes ---------------------" << endl;
   for(int i = 0; i < n; i++){
-    cout << sizeof(buffer);
     cout << buffer[i].codigo << " - " << buffer[i].nome << endl;
   }
-
-  //aqui ta dando falha de segmentacao
 
 }
 
 int main()
 {
+  // cadastrar_cliente();
   listar_cliente();
   return 0;
 }
