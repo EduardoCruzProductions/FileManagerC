@@ -66,23 +66,81 @@ void listar_cliente()
 {
 
   FILE *fp;
-  Cliente buffer[10];
+  Cliente buffer[100];
   int n;
 
   fp = abrir_arquivo(DATA);
   fseek(fp, 0, SEEK_SET);
-  n = fread(buffer, sizeof(Cliente), 10, fp);
+  n = fread(buffer, sizeof(Cliente), 100, fp);
 
   cout << "--------------------- Lista de clientes ---------------------" << endl;
   for(int i = 0; i < n; i++){
     cout << buffer[i].codigo << " - " << buffer[i].nome << endl;
   }
 
+  fclose(fp);
+
+}
+
+void buscar_cliente(int codigo, Cliente *c, int &p){
+
+  FILE *fp;
+  Cliente buffer[100];
+  int n;
+
+  fp = abrir_arquivo(DATA);
+  fseek(fp, 0, SEEK_SET);
+  n = fread(buffer, sizeof(Cliente), 100, fp);
+
+  for(int i = 0; i < n; i++){
+    if(codigo == buffer[i].codigo){
+      p = i;
+      *c = buffer[i];
+    }
+  }
+
+  fclose(fp);
+
+}
+
+void alterar_cliente(int codigo){
+
+  int p = 0;
+  Cliente *c = new Cliente;
+  FILE *fp;
+
+  buscar_cliente(codigo, c, p);
+
+  if(c == NULL){
+    cout << "Registro não encontrado!" << endl;
+  }else{
+
+    cout << "Nome atual: " << c->nome << endl;
+    cout << "Informe o novo nome: ";
+    cin >> c->nome;
+
+    fp = abrir_arquivo(DATA);
+
+    fseek(fp, sizeof(Cliente) * p , SEEK_SET);
+
+    fwrite(c, sizeof(Cliente), 1, fp);
+
+    fclose(fp);
+
+  }
+
 }
 
 int main()
 {
-  // cadastrar_cliente();
+
+  int p = 2;
+  alterar_cliente(p);
   listar_cliente();
+
   return 0;
 }
+
+//compilar com o final -g
+//executar gbd --args ./ex
+//apertar r pra ver o erro
